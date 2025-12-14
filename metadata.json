@@ -1,0 +1,272 @@
+{
+  "artist": "goyo",
+  "title": "Walkthrough",
+  "sections": [
+    {
+      "id": "s1",
+      "title": "에너지의 빛",
+      "subtitle": "Energy as Light",
+      "intro": "파도는 솟구치고, 고요는 멈춰 있으면서도 살아 움직입니다. 이 섹션의 빛은 풍경의 ‘조명’이 아니라, 화면 안에서 공명하며 균형을 찾아가는 ‘기운’입니다. 보이지 않는 세계가 더 오색창연하게 빛난다는 믿음이, 추상과 리듬을 통해 먼저 전시의 문을 엽니다.",
+      "orders": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "풍경이 되는 마음",
+      "subtitle": "When the Mind Becomes Landscape",
+      "intro": "목련이 환하게 빛나던 봄밤의 가로등, 5월의 푸르름, 늦여름 산책로의 공기. 이 섹션에서 빛은 ‘기억의 온도’가 됩니다. 걸으며 마주친 풍경은 곧 마음의 풍경이 되고, 그 풍경은 다시 누군가를 “환해지게” 하는 기도가 됩니다.",
+      "orders": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "사람의 빛",
+      "subtitle": "Light Between People",
+      "intro": "등 뒤에서 느껴지는 숨통(낚시), 말없던 사춘기의 커피 한 잔, 번쩍 안아 올린 아이의 웃음, 선물로 건네는 사과, 열렬히 행복하길 바라는 춤의 마음. 이 섹션의 빛은 관계에서 생깁니다. 사랑과 그리움, 응원과 흐뭇함이 겹쳐지며 ‘삶을 계속하게 하는 빛’으로 남습니다.",
+      "orders": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    }
+  ],
+  "artworks": [
+    {
+      "order": 1,
+      "filename": "01_파도.webp",
+      "title": "파도",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "힘차게 일어나 솟구치는 파도! 그 힘을\n담고 싶었다."
+    },
+    {
+      "order": 2,
+      "filename": "02_파도2.webp",
+      "title": "파도2",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "여름날 시원하게 해안에 부서지는 흰포\n말 가득한 파도를 그려보았다."
+    },
+    {
+      "order": 3,
+      "filename": "03_고요의 구도.webp",
+      "title": "고요의 구도",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "아무 것도 없는 발딛고 있는 적막한 현\n실세상보다도, 보이지 않는 세상은 더\n오색창연하게 빛나는 모든 것이 있는\n곳이다. 대칭구도로 사람과 빛의 실존\n이 대조된다."
+    },
+    {
+      "order": 4,
+      "filename": "04_정적 속의 빛.webp",
+      "title": "정적 속의 빛",
+      "method": "Acrylic on Canvas",
+      "size": "5S",
+      "date": "2025.02",
+      "desc": "공명하는 아우라. 멈춰있지만 눈에 보\n일듯 생동하는 에너지와 균형이 아름답\n다."
+    },
+    {
+      "order": 5,
+      "filename": "05_그린라이트.webp",
+      "title": "그린라이트",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "내부에 품은 빛으로 본연의 색이 투영\n되며 더 아름다워지는 모습. 내면에서\n뿜어나오는 빛을 지닌 사람은 아름답\n다."
+    },
+    {
+      "order": 6,
+      "filename": "06_5월의 푸르름.webp",
+      "title": "5월의 푸르름",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "5월의 하늘과 나무 모두 푸르고 싱그럽\n다. 짙은 푸르름으로 드리워진 그늘이\n초록이 얼마나 우거진지 말해준다."
+    },
+    {
+      "order": 7,
+      "filename": "07_환해졌으면.webp",
+      "title": "환해졌으면",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "마음이 힘들어 지쳐보이던 아들을 위\n해, 봄밤 가로등에 환하게 빛나는 목련\n꽃처럼 마음이 환해졌으면 하는 마음을\n담아 그림. 빛을 머금어야 나도 빛처럼\n빛난다."
+    },
+    {
+      "order": 8,
+      "filename": "08_경쾌한 발걸음.webp",
+      "title": "경쾌한 발걸음",
+      "method": "Acrylic on Canvas",
+      "size": "10P",
+      "date": "2025.03",
+      "desc": "지인과 함께한 덕수궁 나들이 그날의\n날씨도 분위기도 참 경쾌했다."
+    },
+    {
+      "order": 9,
+      "filename": "09_늦여름 산책로.webp",
+      "title": "늦여름 산책로",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "더위가 물러나는 늦여름과 초가을 사이\n산책로를 거닐며 계절이 느껴졌다."
+    },
+    {
+      "order": 10,
+      "filename": "10_성당 가로등.webp",
+      "title": "성당 가로등",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "성당 모퉁이 돌때 보이는 청동빛바랜\n가로등이 보기좋다. 세월과 함께 빛바\n랬으나 아름다운 색을 내는 그리고 어\n둠을 밝히는 가로등! 오래된 성당벽도\n세상의 빛이 되어 온 저 가로등 같다."
+    },
+    {
+      "order": 11,
+      "filename": "11_낚시.webp",
+      "title": "낚시",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "낚시를 하면 숨통이 트인다는 신랑의\n뒷모습, 시간이 지날수록 그럴만한 취\n미라고 여겨진다."
+    },
+    {
+      "order": 12,
+      "filename": "12_부모의 사랑 알곡을 맺네.webp",
+      "title": "부모의 사랑 알곡을 맺네",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "2024.09",
+      "desc": "베란다 화분에 볍씨를 키워 알곡이 맺\n혔다고 기뻐하는 부모님. 논도 아닌 곳\n에서 알곡이 맺기까지 얼마나 정성을\n주셨을까. 날 키운 사랑도 이와 같을듯."
+    },
+    {
+      "order": 13,
+      "filename": "13_얼마나 사랑하는지.webp",
+      "title": "얼마나 사랑하는지",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "잔디밭을 뛰어 놀다 아빠에게 번쩍 안\n겨 행복하게 웃는 얼굴, 너무 이뻐 볼깨\n물기에 한참인 아빠의 모습. 웃는 아이\n의 얼굴을 완성하고는 너무 그리운 그\n시절에 눈물이 흘렀다."
+    },
+    {
+      "order": 14,
+      "filename": "14_네가 타준 커피.webp",
+      "title": "네가 타준 커피",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "사춘기 한참이어서 말도 거의 안걸던\n아들이, 엄마도 한잔 타줄까 하며 타준\n커피. 그날 그 커피가 참 맛있었다."
+    },
+    {
+      "order": 15,
+      "filename": "15_청홍사과.webp",
+      "title": "청홍사과",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "옆단지 살다가 큰길건너 멀리 이사간\n친한 동네 언니, 새집에 건강도 재복도\n쌓이길 기원하며 그려드린 그림"
+    },
+    {
+      "order": 16,
+      "filename": "16_신나는 질주.webp",
+      "title": "신나는 질주",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "우리 찹쌀이, 하네스 없이 애견공원에\n서 신나게 뛰어노는 모습"
+    },
+    {
+      "order": 17,
+      "filename": "17_열렬히 행복하길.webp",
+      "title": "열렬히 행복하길",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "춤을 출때 행복하다고 말하는 아들! 열\n정적으로 자신의 길을 만들어가는 아들\n이 춤과 함께 열렬히 행복하기를."
+    },
+    {
+      "order": 18,
+      "filename": "18_공연직후 핸지님.webp",
+      "title": "공연직후 핸지님",
+      "method": "Acrylic on Canvas",
+      "size": "2S",
+      "date": "2025.11.",
+      "desc": "합창공연을 하고 나온 직후, 지인의 모\n습! 가장 아름다운 순간을 지나고 있는\n모습을 보는 나도 함께 흐뭇했다."
+    },
+    {
+      "order": 19,
+      "filename": "19_목선미.webp",
+      "title": "목선미",
+      "method": "Acrylic on Canvas",
+      "size": "3S",
+      "date": "2025.02",
+      "desc": "초가을 늦은 오후 건널목을 건너는 뒷\n모습, 목선이 아름다운 언니를 그림에\n담다."
+    },
+    {
+      "order": 20,
+      "filename": "20_그림 선생님 나의.webp",
+      "title": "그림 선생님, 나의!",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "첫전시회 선생님따라 걷던 덕수궁 돌담\n길. 돌담길도 선생님 미소처럼 따뜻하\n고 부드럽다."
+    },
+    {
+      "order": 21,
+      "filename": "21_인물.webp",
+      "title": "인물",
+      "method": "digital paint",
+      "size": "",
+      "date": "",
+      "desc": "사람의 실체는 생김새라기 보다 그사람\n에게서 풍기는 분위기, 느낌! 그게 다가\n아닐까."
+    },
+    {
+      "order": 22,
+      "filename": "22_해처럼 해바라기처럼 빛나라.webp",
+      "title": "해처럼 해바라기처럼 빛나라",
+      "method": "! Acrylic on Canvas",
+      "size": "10F",
+      "date": "2025.06",
+      "desc": "이 그림이 걸리는 주변이 모두 환하게\n빛나고 좋은 장소가 되기를 바라며..."
+    },
+    {
+      "order": 23,
+      "filename": "23_delight.webp",
+      "title": "delight",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "금빛넘실 손위에 가득 빛나는 현존하지\n않는 이름의 꽃, 넘치는 기쁨의 즐거움\n을 표현"
+    },
+    {
+      "order": 24,
+      "filename": "24_희망과 불신.webp",
+      "title": "희망과 불신",
+      "method": "Acrylic on Canvas",
+      "size": "",
+      "date": "",
+      "desc": "희망의 빛이 되신 예수님. 창세기 선악\n과나무와 생명의 나무가 있다. 예수님\n의 십자가는 인간의 욕심과 불신으로\n멀어진 하느님과의 관계를 다시 연결해\n주는 생명의 나무다."
+    }
+  ]
+}
