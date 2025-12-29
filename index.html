@@ -18,6 +18,8 @@
     background: linear-gradient(180deg, #0b0c10, #0b0c10 40%, #0f1117);
     color:var(--text);
   }
+  /* 모달 열릴 때 배경 스크롤 방지 */
+  body.modal-open { overflow: hidden; }
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   header {
@@ -36,7 +38,8 @@
     background: rgba(255,255,255,.03);
   }
   main { padding: 10px 0 60px; }
-  .section { margin-top: 26px; }
+  .section { margin-top: 26px;   scroll-margin-top: 90px;
+  }
   .section h2 { margin: 0 0 10px; font-size: 18px; }
   .section-intro {
     margin: 0 0 14px; color: var(--muted); line-height: 1.65;
@@ -44,6 +47,7 @@
     background: rgba(255,255,255,.03);
   }
   .thumbs {
+    scroll-margin-top: 90px;
     display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
     margin-bottom: 14px;
@@ -93,7 +97,11 @@
   }
   .modal.open { display:block; }
   .modal-inner {
-    position:absolute; inset: 12px;
+    position:absolute;
+    top: 12px; bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1200px, calc(100vw - 24px));
     display:flex; flex-direction:column;
   }
   .modal-bar {
@@ -115,13 +123,43 @@
   .modal-img {
     margin-top: 10px;
     flex:1; display:flex; align-items:center; justify-content:center;
+    overflow:auto;
   }
   .modal-img img {
     max-width: 100%; max-height: 100%;
     width: auto; height: auto;
+    object-fit: contain;
     border-radius: 14px;
     border: 1px solid rgba(255,255,255,.15);
     cursor: zoom-out;
+  }
+
+
+  .modal-desc {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 14px;
+    background: rgba(10,10,12,.55);
+    color: var(--text);
+    line-height: 1.65;
+    max-height: 24vh;
+    overflow: auto;
+  }
+  .modal-desc .m-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .modal-desc .m-desc {
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+  }
+
+  @media (min-width: 1100px) {
+    .modal-inner {
+      top: 18px; bottom: 18px;
+      width: min(1320px, calc(100vw - 36px));
+    }
   }
 </style>
 </head>
@@ -132,12 +170,6 @@
       <div>
         <h1><빛의 공명>, goyo 첫개인전 2025</h1>
         <div class="sub">섹션 3개 · 작품 24점 · 이미지 클릭하면 크게 보기</div>
-      <div class="sub" id="imgHelp" style="display:none; margin-top:8px;">
-        이미지가 깨져 보이면: <button class="btn" type="button" id="pickBtn">이미지 폴더 선택</button>
-        <span style="color:var(--muted); font-size:12px; margin-left:6px;">(images 폴더가 들어있는 전시 폴더를 선택하세요)</span>
-      </div>
-      <input type="file" id="folderPicker" webkitdirectory multiple style="display:none;">
-
       </div>
     </div>
     <nav class="toc">
@@ -151,20 +183,20 @@
     <section class="section" id="s1">
       <h2>에너지의 빛</h2>
       <p class="section-intro">파도는 솟구치고, 고요는 멈춰 있으면서도 살아 움직입니다. 이 섹션의 빛은 풍경의 ‘조명’이 아니라, 화면 안에서 공명하며 균형을 찾아가는 ‘기운’입니다. 보이지 않는 세계가 더 오색창연하게 빛난다는 믿음이, 추상과 리듬을 통해 먼저 전시의 문을 엽니다.</p>
-      <div class="thumbs"><a class="thumb" href="#work-01">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="01_파도.webp" alt="파도">
+      <div class="thumbs" id="s1-thumbs"><a class="thumb" href="#work-01">
+            <img src="images/01_파도.webp" alt="파도">
             <div class="thumb-cap">01. 파도</div>
         </a><a class="thumb" href="#work-02">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="02_파도2.webp" alt="파도2">
+            <img src="images/02_파도2.webp" alt="파도2">
             <div class="thumb-cap">02. 파도2</div>
         </a><a class="thumb" href="#work-03">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="03_고요의 구도.webp" alt="고요의 구도">
+            <img src="images/03_고요의 구도.webp" alt="고요의 구도">
             <div class="thumb-cap">03. 고요의 구도</div>
         </a><a class="thumb" href="#work-04">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="04_정적 속의 빛.webp" alt="정적 속의 빛">
+            <img src="images/04_정적 속의 빛.webp" alt="정적 속의 빛">
             <div class="thumb-cap">04. 정적 속의 빛</div>
         </a><a class="thumb" href="#work-05">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="05_그린라이트.webp" alt="그린라이트">
+            <img src="images/05_그린라이트.webp" alt="그린라이트">
             <div class="thumb-cap">05. 그린라이트</div>
         </a></div>
       <div class="works">
@@ -174,10 +206,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="01_파도.webp" alt="파도" loading="lazy" onclick="openModal(1);">
+        <img src="images/01_파도.webp" alt="파도" loading="lazy" onclick="openModal(1);">
       </div>
       <div class='desc'>힘차게 일어나 솟구치는 파도! 그 힘을 담고 싶었다.</div>
-      <div class='work-nav'><span class='btn disabled'>← 이전</span><a class='btn' href='#top'>목록</a><a class='btn' href='#work-02'>다음 →</a></div>
+      <div class='work-nav'><span class='btn disabled'>← 이전</span><a class='btn' href='#s1-thumbs'>섹션목록</a><a class='btn' href='#work-02'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-02">
@@ -186,10 +218,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="02_파도2.webp" alt="파도2" loading="lazy" onclick="openModal(2);">
+        <img src="images/02_파도2.webp" alt="파도2" loading="lazy" onclick="openModal(2);">
       </div>
       <div class='desc'>여름날 시원하게 해안에 부서지는 흰포말 가득한 파도를 그려보았다.</div>
-      <div class='work-nav'><a class='btn' href='#work-01'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-03'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-01'>← 이전</a><a class='btn' href='#s1-thumbs'>섹션목록</a><a class='btn' href='#work-03'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-03">
@@ -198,10 +230,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="03_고요의 구도.webp" alt="고요의 구도" loading="lazy" onclick="openModal(3);">
+        <img src="images/03_고요의 구도.webp" alt="고요의 구도" loading="lazy" onclick="openModal(3);">
       </div>
       <div class='desc'>아무 것도 없는 발딛고 있는 적막한 현실세상보다도, 보이지 않는 세상은 더 오색창연하게 빛나는 모든 것이 있는 곳이다. 대칭구도로 사람과 빛의 실존이 대조된다.</div>
-      <div class='work-nav'><a class='btn' href='#work-02'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-04'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-02'>← 이전</a><a class='btn' href='#s1-thumbs'>섹션목록</a><a class='btn' href='#work-04'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-04">
@@ -210,10 +242,10 @@
         <div class='meta'>Acrylic on Canvas · 5S · 2025.02</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="04_정적 속의 빛.webp" alt="정적 속의 빛" loading="lazy" onclick="openModal(4);">
+        <img src="images/04_정적 속의 빛.webp" alt="정적 속의 빛" loading="lazy" onclick="openModal(4);">
       </div>
       <div class='desc'>공명하는 아우라. 멈춰있지만 눈에 보일듯 생동하는 에너지와 균형이 아름답다.</div>
-      <div class='work-nav'><a class='btn' href='#work-03'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-05'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-03'>← 이전</a><a class='btn' href='#s1-thumbs'>섹션목록</a><a class='btn' href='#work-05'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-05">
@@ -222,10 +254,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="05_그린라이트.webp" alt="그린라이트" loading="lazy" onclick="openModal(5);">
+        <img src="images/05_그린라이트.webp" alt="그린라이트" loading="lazy" onclick="openModal(5);">
       </div>
       <div class='desc'>내부에 품은 빛으로 본연의 색이 투영되며 더 아름다워지는 모습. 내면에서 뿜어나오는 빛을 지닌 사람은 아름답다.</div>
-      <div class='work-nav'><a class='btn' href='#work-04'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-06'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-04'>← 이전</a><a class='btn' href='#s1-thumbs'>섹션목록</a><a class='btn' href='#work-06'>다음 →</a></div>
     </article>
     </div>
       <div class="backtop"><a href="#top">↑ 위로</a></div>
@@ -234,20 +266,20 @@
     <section class="section" id="s2">
       <h2>풍경이 되는 마음</h2>
       <p class="section-intro">목련이 환하게 빛나던 봄밤의 가로등, 5월의 푸르름, 늦여름 산책로의 공기. 이 섹션에서 빛은 ‘기억의 온도’가 됩니다. 걸으며 마주친 풍경은 곧 마음의 풍경이 되고, 그 풍경은 다시 누군가를 “환해지게” 하는 기도가 됩니다.</p>
-      <div class="thumbs"><a class="thumb" href="#work-06">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="06_5월의 푸르름.webp" alt="5월의 푸르름">
+      <div class="thumbs" id="s2-thumbs"><a class="thumb" href="#work-06">
+            <img src="images/06_5월의 푸르름.webp" alt="5월의 푸르름">
             <div class="thumb-cap">06. 5월의 푸르름</div>
         </a><a class="thumb" href="#work-07">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="07_환해졌으면.webp" alt="환해졌으면">
+            <img src="images/07_환해졌으면.webp" alt="환해졌으면">
             <div class="thumb-cap">07. 환해졌으면</div>
         </a><a class="thumb" href="#work-08">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="08_경쾌한 발걸음.webp" alt="경쾌한 발걸음">
+            <img src="images/08_경쾌한 발걸음.webp" alt="경쾌한 발걸음">
             <div class="thumb-cap">08. 경쾌한 발걸음</div>
         </a><a class="thumb" href="#work-09">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="09_늦여름 산책로.webp" alt="늦여름 산책로">
+            <img src="images/09_늦여름 산책로.webp" alt="늦여름 산책로">
             <div class="thumb-cap">09. 늦여름 산책로</div>
         </a><a class="thumb" href="#work-10">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="10_성당 가로등.webp" alt="성당 가로등">
+            <img src="images/10_성당 가로등.webp" alt="성당 가로등">
             <div class="thumb-cap">10. 성당 가로등</div>
         </a></div>
       <div class="works">
@@ -257,10 +289,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="06_5월의 푸르름.webp" alt="5월의 푸르름" loading="lazy" onclick="openModal(6);">
+        <img src="images/06_5월의 푸르름.webp" alt="5월의 푸르름" loading="lazy" onclick="openModal(6);">
       </div>
       <div class='desc'>5월의 하늘과 나무 모두 푸르고 싱그럽다. 짙은 푸르름으로 드리워진 그늘이 초록이 얼마나 우거진지 말해준다.</div>
-      <div class='work-nav'><a class='btn' href='#work-05'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-07'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-05'>← 이전</a><a class='btn' href='#s2-thumbs'>섹션목록</a><a class='btn' href='#work-07'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-07">
@@ -269,10 +301,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="07_환해졌으면.webp" alt="환해졌으면" loading="lazy" onclick="openModal(7);">
+        <img src="images/07_환해졌으면.webp" alt="환해졌으면" loading="lazy" onclick="openModal(7);">
       </div>
       <div class='desc'>마음이 힘들어 지쳐보이던 아들을 위해, 봄밤 가로등에 환하게 빛나는 목련꽃처럼 마음이 환해졌으면 하는 마음을 담아 그림. 빛을 머금어야 나도 빛처럼 빛난다.</div>
-      <div class='work-nav'><a class='btn' href='#work-06'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-08'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-06'>← 이전</a><a class='btn' href='#s2-thumbs'>섹션목록</a><a class='btn' href='#work-08'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-08">
@@ -281,10 +313,10 @@
         <div class='meta'>Acrylic on Canvas · 10P · 2025.03</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="08_경쾌한 발걸음.webp" alt="경쾌한 발걸음" loading="lazy" onclick="openModal(8);">
+        <img src="images/08_경쾌한 발걸음.webp" alt="경쾌한 발걸음" loading="lazy" onclick="openModal(8);">
       </div>
       <div class='desc'>지인과 함께한 덕수궁 나들이 그날의 날씨도 분위기도 참 경쾌했다.</div>
-      <div class='work-nav'><a class='btn' href='#work-07'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-09'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-07'>← 이전</a><a class='btn' href='#s2-thumbs'>섹션목록</a><a class='btn' href='#work-09'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-09">
@@ -293,10 +325,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="09_늦여름 산책로.webp" alt="늦여름 산책로" loading="lazy" onclick="openModal(9);">
+        <img src="images/09_늦여름 산책로.webp" alt="늦여름 산책로" loading="lazy" onclick="openModal(9);">
       </div>
       <div class='desc'>더위가 물러나는 늦여름과 초가을 사이 산책로를 거닐며 계절이 느껴졌다.</div>
-      <div class='work-nav'><a class='btn' href='#work-08'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-10'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-08'>← 이전</a><a class='btn' href='#s2-thumbs'>섹션목록</a><a class='btn' href='#work-10'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-10">
@@ -305,10 +337,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="10_성당 가로등.webp" alt="성당 가로등" loading="lazy" onclick="openModal(10);">
+        <img src="images/10_성당 가로등.webp" alt="성당 가로등" loading="lazy" onclick="openModal(10);">
       </div>
       <div class='desc'>성당 모퉁이 돌때 보이는 청동빛바랜 가로등이 보기좋다. 세월과 함께 빛바랬으나 아름다운 색을 내는 그리고 어둠을 밝히는 가로등! 오래된 성당벽도 세상의 빛이 되어 온 저 가로등 같다.</div>
-      <div class='work-nav'><a class='btn' href='#work-09'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-11'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-09'>← 이전</a><a class='btn' href='#s2-thumbs'>섹션목록</a><a class='btn' href='#work-11'>다음 →</a></div>
     </article>
     </div>
       <div class="backtop"><a href="#top">↑ 위로</a></div>
@@ -317,47 +349,47 @@
     <section class="section" id="s3">
       <h2>사람의 빛</h2>
       <p class="section-intro">등 뒤에서 느껴지는 숨통(낚시), 말없던 사춘기의 커피 한 잔, 번쩍 안아 올린 아이의 웃음, 선물로 건네는 사과, 열렬히 행복하길 바라는 춤의 마음. 이 섹션의 빛은 관계에서 생깁니다. 사랑과 그리움, 응원과 흐뭇함이 겹쳐지며 ‘삶을 계속하게 하는 빛’으로 남습니다.</p>
-      <div class="thumbs"><a class="thumb" href="#work-11">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="11_낚시.webp" alt="낚시">
+      <div class="thumbs" id="s3-thumbs"><a class="thumb" href="#work-11">
+            <img src="images/11_낚시.webp" alt="낚시">
             <div class="thumb-cap">11. 낚시</div>
         </a><a class="thumb" href="#work-12">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="12_부모의 사랑 알곡을 맺네.webp" alt="부모의 사랑 알곡을 맺네">
+            <img src="images/12_부모의 사랑 알곡을 맺네.webp" alt="부모의 사랑 알곡을 맺네">
             <div class="thumb-cap">12. 부모의 사랑 알곡을 맺네</div>
         </a><a class="thumb" href="#work-13">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="13_얼마나 사랑하는지.webp" alt="얼마나 사랑하는지">
+            <img src="images/13_얼마나 사랑하는지.webp" alt="얼마나 사랑하는지">
             <div class="thumb-cap">13. 얼마나 사랑하는지</div>
         </a><a class="thumb" href="#work-14">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="14_네가 타준 커피.webp" alt="네가 타준 커피">
+            <img src="images/14_네가 타준 커피.webp" alt="네가 타준 커피">
             <div class="thumb-cap">14. 네가 타준 커피</div>
         </a><a class="thumb" href="#work-15">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="15_청홍사과.webp" alt="청홍사과">
+            <img src="images/15_청홍사과.webp" alt="청홍사과">
             <div class="thumb-cap">15. 청홍사과</div>
         </a><a class="thumb" href="#work-16">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="16_신나는 질주.webp" alt="신나는 질주">
+            <img src="images/16_신나는 질주.webp" alt="신나는 질주">
             <div class="thumb-cap">16. 신나는 질주</div>
         </a><a class="thumb" href="#work-17">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="17_열렬히 행복하길.webp" alt="열렬히 행복하길">
+            <img src="images/17_열렬히 행복하길.webp" alt="열렬히 행복하길">
             <div class="thumb-cap">17. 열렬히 행복하길</div>
         </a><a class="thumb" href="#work-18">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="18_공연직후 핸지님.webp" alt="공연직후 핸지님">
+            <img src="images/18_공연직후 핸지님.webp" alt="공연직후 핸지님">
             <div class="thumb-cap">18. 공연직후 핸지님</div>
         </a><a class="thumb" href="#work-19">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="19_목선미.webp" alt="목선미">
+            <img src="images/19_목선미.webp" alt="목선미">
             <div class="thumb-cap">19. 목선미</div>
         </a><a class="thumb" href="#work-20">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="20_그림 선생님 나의.webp" alt="그림 선생님, 나의!">
+            <img src="images/20_그림 선생님 나의.webp" alt="그림 선생님, 나의!">
             <div class="thumb-cap">20. 그림 선생님, 나의!</div>
         </a><a class="thumb" href="#work-21">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="21_인물.webp" alt="인물">
+            <img src="images/21_인물.webp" alt="인물">
             <div class="thumb-cap">21. 인물</div>
         </a><a class="thumb" href="#work-22">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="22_해처럼 해바라기처럼 빛나라.webp" alt="해처럼 해바라기처럼 빛나라">
+            <img src="images/22_해처럼 해바라기처럼 빛나라.webp" alt="해처럼 해바라기처럼 빛나라">
             <div class="thumb-cap">22. 해처럼 해바라기처럼 빛나라</div>
         </a><a class="thumb" href="#work-23">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="23_delight.webp" alt="delight">
+            <img src="images/23_delight.webp" alt="delight">
             <div class="thumb-cap">23. delight</div>
         </a><a class="thumb" href="#work-24">
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="24_희망과 불신.webp" alt="희망과 불신">
+            <img src="images/24_희망과 불신.webp" alt="희망과 불신">
             <div class="thumb-cap">24. 희망과 불신</div>
         </a></div>
       <div class="works">
@@ -367,10 +399,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="11_낚시.webp" alt="낚시" loading="lazy" onclick="openModal(11);">
+        <img src="images/11_낚시.webp" alt="낚시" loading="lazy" onclick="openModal(11);">
       </div>
       <div class='desc'>낚시를 하면 숨통이 트인다는 신랑의 뒷모습, 시간이 지날수록 그럴만한 취미라고 여겨진다.</div>
-      <div class='work-nav'><a class='btn' href='#work-10'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-12'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-10'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-12'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-12">
@@ -379,10 +411,10 @@
         <div class='meta'>Acrylic on Canvas · 2024.09</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="12_부모의 사랑 알곡을 맺네.webp" alt="부모의 사랑 알곡을 맺네" loading="lazy" onclick="openModal(12);">
+        <img src="images/12_부모의 사랑 알곡을 맺네.webp" alt="부모의 사랑 알곡을 맺네" loading="lazy" onclick="openModal(12);">
       </div>
       <div class='desc'>베란다 화분에 볍씨를 키워 알곡이 맺혔다고 기뻐하는 부모님. 논도 아닌 곳에서 알곡이 맺기까지 얼마나 정성을 주셨을까. 날 키운 사랑도 이와 같을듯.</div>
-      <div class='work-nav'><a class='btn' href='#work-11'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-13'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-11'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-13'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-13">
@@ -391,10 +423,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="13_얼마나 사랑하는지.webp" alt="얼마나 사랑하는지" loading="lazy" onclick="openModal(13);">
+        <img src="images/13_얼마나 사랑하는지.webp" alt="얼마나 사랑하는지" loading="lazy" onclick="openModal(13);">
       </div>
       <div class='desc'>잔디밭을 뛰어 놀다 아빠에게 번쩍 안겨 행복하게 웃는 얼굴, 너무 이뻐 볼깨물기에 한참인 아빠의 모습. 웃는 아이의 얼굴을 완성하고는 너무 그리운 그시절에 눈물이 흘렀다.</div>
-      <div class='work-nav'><a class='btn' href='#work-12'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-14'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-12'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-14'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-14">
@@ -403,10 +435,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="14_네가 타준 커피.webp" alt="네가 타준 커피" loading="lazy" onclick="openModal(14);">
+        <img src="images/14_네가 타준 커피.webp" alt="네가 타준 커피" loading="lazy" onclick="openModal(14);">
       </div>
       <div class='desc'>사춘기 한참이어서 말도 거의 안걸던 아들이, 엄마도 한잔 타줄까 하며 타준 커피. 그날 그 커피가 참 맛있었다.</div>
-      <div class='work-nav'><a class='btn' href='#work-13'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-15'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-13'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-15'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-15">
@@ -415,10 +447,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="15_청홍사과.webp" alt="청홍사과" loading="lazy" onclick="openModal(15);">
+        <img src="images/15_청홍사과.webp" alt="청홍사과" loading="lazy" onclick="openModal(15);">
       </div>
       <div class='desc'>옆단지 살다가 큰길건너 멀리 이사간 친한  동네 언니, 새집에 건강도 재복도 쌓이길 기원하며 그려드린 그림</div>
-      <div class='work-nav'><a class='btn' href='#work-14'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-16'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-14'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-16'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-16">
@@ -427,10 +459,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="16_신나는 질주.webp" alt="신나는 질주" loading="lazy" onclick="openModal(16);">
+        <img src="images/16_신나는 질주.webp" alt="신나는 질주" loading="lazy" onclick="openModal(16);">
       </div>
       <div class='desc'>우리 찹쌀이, 하네스 없이 자유롭게 애견공원에서 신나게 뛰어노는 모습</div>
-      <div class='work-nav'><a class='btn' href='#work-15'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-17'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-15'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-17'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-17">
@@ -439,10 +471,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="17_열렬히 행복하길.webp" alt="열렬히 행복하길" loading="lazy" onclick="openModal(17);">
+        <img src="images/17_열렬히 행복하길.webp" alt="열렬히 행복하길" loading="lazy" onclick="openModal(17);">
       </div>
       <div class='desc'>춤을 출때 행복하다고 말하는 아들! 열정적으로 자신의 길을 만들어가는 아들이 춤과 함께 열렬히 행복하기를.</div>
-      <div class='work-nav'><a class='btn' href='#work-16'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-18'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-16'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-18'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-18">
@@ -451,10 +483,10 @@
         <div class='meta'>Acrylic on Canvas · 2S · 2025.11.</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="18_공연직후 핸지님.webp" alt="공연직후 핸지님" loading="lazy" onclick="openModal(18);">
+        <img src="images/18_공연직후 핸지님.webp" alt="공연직후 핸지님" loading="lazy" onclick="openModal(18);">
       </div>
       <div class='desc'>합창공연을 하고 나온 직후, 지인의 모습! 가장 아름다운 순간을 지나고 있는 모습을 보는 나도 함께 흐뭇했다.</div>
-      <div class='work-nav'><a class='btn' href='#work-17'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-19'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-17'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-19'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-19">
@@ -463,10 +495,10 @@
         <div class='meta'>Acrylic on Canvas · 3S · 2025.02</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="19_목선미.webp" alt="목선미" loading="lazy" onclick="openModal(19);">
+        <img src="images/19_목선미.webp" alt="목선미" loading="lazy" onclick="openModal(19);">
       </div>
       <div class='desc'>초가을 늦은 오후 건널목을 건너는 뒷 모습, 목선이 아름다운 언니를 그림에 담다.</div>
-      <div class='work-nav'><a class='btn' href='#work-18'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-20'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-18'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-20'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-20">
@@ -475,10 +507,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="20_그림 선생님 나의.webp" alt="그림 선생님, 나의!" loading="lazy" onclick="openModal(20);">
+        <img src="images/20_그림 선생님 나의.webp" alt="그림 선생님, 나의!" loading="lazy" onclick="openModal(20);">
       </div>
       <div class='desc'>첫전시회 선생님따라 걷던 덕수궁 돌담길. 고궁 돌담길도 선생님 미소처럼 따뜻하고 부드럽다.</div>
-      <div class='work-nav'><a class='btn' href='#work-19'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-21'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-19'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-21'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-21">
@@ -487,10 +519,10 @@
         <div class='meta'>digital paint</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="21_인물.webp" alt="인물" loading="lazy" onclick="openModal(21);">
+        <img src="images/21_인물.webp" alt="인물" loading="lazy" onclick="openModal(21);">
       </div>
       <div class='desc'>사람의 실체는 생김새라기 보다 그사람에게서 풍기는 분위기, 느낌! 그게 거의 다가 아닐까.</div>
-      <div class='work-nav'><a class='btn' href='#work-20'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-22'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-20'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-22'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-22">
@@ -499,10 +531,10 @@
         <div class='meta'>! Acrylic on Canvas · 10F · 2025.06</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="22_해처럼 해바라기처럼 빛나라.webp" alt="해처럼 해바라기처럼 빛나라" loading="lazy" onclick="openModal(22);">
+        <img src="images/22_해처럼 해바라기처럼 빛나라.webp" alt="해처럼 해바라기처럼 빛나라" loading="lazy" onclick="openModal(22);">
       </div>
       <div class='desc'>이 그림이 걸리는 주변이 모두 환하게 빛나고 좋은 장소가 되기를 바라며...</div>
-      <div class='work-nav'><a class='btn' href='#work-21'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-23'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-21'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-23'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-23">
@@ -511,10 +543,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="23_delight.webp" alt="delight" loading="lazy" onclick="openModal(23);">
+        <img src="images/23_delight.webp" alt="delight" loading="lazy" onclick="openModal(23);">
       </div>
       <div class='desc'>금빛넘실 손위에 가득 빛나는 현존하지 않는 이름의 꽃, 넘치는 기쁨의 즐거움을 표현</div>
-      <div class='work-nav'><a class='btn' href='#work-22'>← 이전</a><a class='btn' href='#top'>목록</a><a class='btn' href='#work-24'>다음 →</a></div>
+      <div class='work-nav'><a class='btn' href='#work-22'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><a class='btn' href='#work-24'>다음 →</a></div>
     </article>
     
     <article class="work" id="work-24">
@@ -523,10 +555,10 @@
         <div class='meta'>Acrylic on Canvas</div>
       </div>
       <div class="img-wrap">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='400'%3E%3Crect%20width='100%25'%20height='100%25'%20fill='%2315171c'/%3E%3Ctext%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23aab1bd'%20font-family='system-ui'%20font-size='16'%3Eloading...%3C/text%3E%3C/svg%3E" data-file="24_희망과 불신.webp" alt="희망과 불신" loading="lazy" onclick="openModal(24);">
+        <img src="images/24_희망과 불신.webp" alt="희망과 불신" loading="lazy" onclick="openModal(24);">
       </div>
       <div class='desc'>희망의 빛이 되신 예수님. 창세기 선악과나무와 생명의 나무가 있다. 예수님의 십자가는 인간의 욕심과 불신으로 멀어진 하느님과의 관계를 다시 연결해주는 생명의 나무다.</div>
-      <div class='work-nav'><a class='btn' href='#work-23'>← 이전</a><a class='btn' href='#top'>목록</a><span class='btn disabled'>다음 →</span></div>
+      <div class='work-nav'><a class='btn' href='#work-23'>← 이전</a><a class='btn' href='#s3-thumbs'>섹션목록</a><span class='btn disabled'>다음 →</span></div>
     </article>
     </div>
       <div class="backtop"><a href="#top">↑ 위로</a></div>
@@ -547,77 +579,16 @@
     <div class="modal-img">
       <img id="modalImg" src="" alt="">
     </div>
-  </div>
+  
+    <div class="modal-desc" id="modalDesc" aria-live="polite">
+      <div class="m-meta" id="modalMeta"></div>
+      <div class="m-desc" id="modalDescText"></div>
+    </div>
+</div>
 </div>
 
 <script>
-
-// --- mobile-safe image loader (Korean filenames / content:// fallback) ---
-const pickedMap = new Map();
-
-function encFileName(name){
-  // encodeURI leaves some chars unescaped; use encodeURIComponent for filenames
-  return encodeURIComponent(name).replace(/%2F/g, '/');
-}
-
-function candidateSrcs(file){
-  const enc = encFileName(file);
-  return ["images/" + enc, "_converted/" + enc, "images/" + enc.replace(/%20/g, "_")];
-}
-
-function setImgWithFallback(img, file){
-  if (pickedMap.has(file)) {
-    img.src = pickedMap.get(file);
-    img.classList.remove('broken');
-    return;
-  }
-  const cands = candidateSrcs(file);
-  let i = 0;
-  img.onerror = () => {
-    if (i >= cands.length) {
-      img.classList.add('broken');
-      return;
-    }
-    img.src = cands[i++];
-  };
-  // kick off
-  img.onerror();
-}
-
-function applyAllImages(){
-  document.querySelectorAll('img[data-file]').forEach(img=>{
-    const file = img.getAttribute('data-file');
-    setImgWithFallback(img, file);
-  });
-  // If any broken, show help UI
-  const anyBroken = document.querySelectorAll('img.broken').length > 0;
-  const help = document.getElementById('imgHelp');
-  if (help) help.style.display = anyBroken ? 'block' : 'none';
-}
-
-function wirePicker(){
-  const btn = document.getElementById('pickBtn');
-  const picker = document.getElementById('folderPicker');
-  if (!btn || !picker) return;
-  btn.addEventListener('click', ()=> picker.click());
-  picker.addEventListener('change', ()=>{
-    pickedMap.clear();
-    for (const f of picker.files){
-      // match by basename (e.g., 01_파도.webp)
-      const name = f.name;
-      if (!name) continue;
-      pickedMap.set(name, URL.createObjectURL(f));
-    }
-    applyAllImages();
-  });
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  wirePicker();
-  applyAllImages();
-});
-
-const works = {"1": {"title": "파도", "file": "01_파도.webp"}, "2": {"title": "파도2", "file": "02_파도2.webp"}, "3": {"title": "고요의 구도", "file": "03_고요의 구도.webp"}, "4": {"title": "정적 속의 빛", "file": "04_정적 속의 빛.webp"}, "5": {"title": "그린라이트", "file": "05_그린라이트.webp"}, "6": {"title": "5월의 푸르름", "file": "06_5월의 푸르름.webp"}, "7": {"title": "환해졌으면", "file": "07_환해졌으면.webp"}, "8": {"title": "경쾌한 발걸음", "file": "08_경쾌한 발걸음.webp"}, "9": {"title": "늦여름 산책로", "file": "09_늦여름 산책로.webp"}, "10": {"title": "성당 가로등", "file": "10_성당 가로등.webp"}, "11": {"title": "낚시", "file": "11_낚시.webp"}, "12": {"title": "부모의 사랑 알곡을 맺네", "file": "12_부모의 사랑 알곡을 맺네.webp"}, "13": {"title": "얼마나 사랑하는지", "file": "13_얼마나 사랑하는지.webp"}, "14": {"title": "네가 타준 커피", "file": "14_네가 타준 커피.webp"}, "15": {"title": "청홍사과", "file": "15_청홍사과.webp"}, "16": {"title": "신나는 질주", "file": "16_신나는 질주.webp"}, "17": {"title": "열렬히 행복하길", "file": "17_열렬히 행복하길.webp"}, "18": {"title": "공연직후 핸지님", "file": "18_공연직후 핸지님.webp"}, "19": {"title": "목선미", "file": "19_목선미.webp"}, "20": {"title": "그림 선생님, 나의!", "file": "20_그림 선생님 나의.webp"}, "21": {"title": "인물", "file": "21_인물.webp"}, "22": {"title": "해처럼 해바라기처럼 빛나라", "file": "22_해처럼 해바라기처럼 빛나라.webp"}, "23": {"title": "delight", "file": "23_delight.webp"}, "24": {"title": "희망과 불신", "file": "24_희망과 불신.webp"}};
+const works = {"1": {"title": "파도", "file": "01_파도.webp", "method": "Acrylic on Canvas", "desc": "힘차게 일어나 솟구치는 파도! 그 힘을\n담고 싶었다."}, "2": {"title": "파도2", "file": "02_파도2.webp", "method": "Acrylic on Canvas", "desc": "여름날 시원하게 해안에 부서지는 흰포\n말 가득한 파도를 그려보았다."}, "3": {"title": "고요의 구도", "file": "03_고요의 구도.webp", "method": "Acrylic on Canvas", "desc": "아무 것도 없는 발딛고 있는 적막한 현\n실세상보다도, 보이지 않는 세상은 더\n오색창연하게 빛나는 모든 것이 있는\n곳이다. 대칭구도로 사람과 빛의 실존\n이 대조된다."}, "4": {"title": "정적 속의 빛", "file": "04_정적 속의 빛.webp", "method": "Acrylic on Canvas", "desc": "공명하는 아우라. 멈춰있지만 눈에 보\n일듯 생동하는 에너지와 균형이 아름답\n다."}, "5": {"title": "그린라이트", "file": "05_그린라이트.webp", "method": "Acrylic on Canvas", "desc": "내부에 품은 빛으로 본연의 색이 투영\n되며 더 아름다워지는 모습. 내면에서\n뿜어나오는 빛을 지닌 사람은 아름답\n다."}, "6": {"title": "5월의 푸르름", "file": "06_5월의 푸르름.webp", "method": "Acrylic on Canvas", "desc": "5월의 하늘과 나무 모두 푸르고 싱그럽\n다. 짙은 푸르름으로 드리워진 그늘이\n초록이 얼마나 우거진지 말해준다."}, "7": {"title": "환해졌으면", "file": "07_환해졌으면.webp", "method": "Acrylic on Canvas", "desc": "마음이 힘들어 지쳐보이던 아들을 위\n해, 봄밤 가로등에 환하게 빛나는 목련\n꽃처럼 마음이 환해졌으면 하는 마음을\n담아 그림. 빛을 머금어야 나도 빛처럼\n빛난다."}, "8": {"title": "경쾌한 발걸음", "file": "08_경쾌한 발걸음.webp", "method": "Acrylic on Canvas", "desc": "지인과 함께한 덕수궁 나들이 그날의\n날씨도 분위기도 참 경쾌했다."}, "9": {"title": "늦여름 산책로", "file": "09_늦여름 산책로.webp", "method": "Acrylic on Canvas", "desc": "더위가 물러나는 늦여름과 초가을 사이\n산책로를 거닐며 계절이 느껴졌다."}, "10": {"title": "성당 가로등", "file": "10_성당 가로등.webp", "method": "Acrylic on Canvas", "desc": "성당 모퉁이 돌때 보이는 청동빛바랜\n가로등이 보기좋다. 세월과 함께 빛바\n랬으나 아름다운 색을 내는 그리고 어\n둠을 밝히는 가로등! 오래된 성당벽도\n세상의 빛이 되어 온 저 가로등 같다."}, "11": {"title": "낚시", "file": "11_낚시.webp", "method": "Acrylic on Canvas", "desc": "낚시를 하면 숨통이 트인다는 신랑의\n뒷모습, 시간이 지날수록 그럴만한 취\n미라고 여겨진다."}, "12": {"title": "부모의 사랑 알곡을 맺네", "file": "12_부모의 사랑 알곡을 맺네.webp", "method": "Acrylic on Canvas", "desc": "베란다 화분에 볍씨를 키워 알곡이 맺\n혔다고 기뻐하는 부모님. 논도 아닌 곳\n에서 알곡이 맺기까지 얼마나 정성을\n주셨을까. 날 키운 사랑도 이와 같을듯."}, "13": {"title": "얼마나 사랑하는지", "file": "13_얼마나 사랑하는지.webp", "method": "Acrylic on Canvas", "desc": "잔디밭을 뛰어 놀다 아빠에게 번쩍 안\n겨 행복하게 웃는 얼굴, 너무 이뻐 볼깨\n물기에 한참인 아빠의 모습. 웃는 아이\n의 얼굴을 완성하고는 너무 그리운 그\n시절에 눈물이 흘렀다."}, "14": {"title": "네가 타준 커피", "file": "14_네가 타준 커피.webp", "method": "Acrylic on Canvas", "desc": "사춘기 한참이어서 말도 거의 안걸던\n아들이, 엄마도 한잔 타줄까 하며 타준\n커피. 그날 그 커피가 참 맛있었다."}, "15": {"title": "청홍사과", "file": "15_청홍사과.webp", "method": "Acrylic on Canvas", "desc": "옆단지 살다가 큰길건너 멀리 이사간\n친한 동네 언니, 새집에 건강도 재복도\n쌓이길 기원하며 그려드린 그림"}, "16": {"title": "신나는 질주", "file": "16_신나는 질주.webp", "method": "Acrylic on Canvas", "desc": "우리 찹쌀이, 하네스 없이 애견공원에\n서 신나게 뛰어노는 모습"}, "17": {"title": "열렬히 행복하길", "file": "17_열렬히 행복하길.webp", "method": "Acrylic on Canvas", "desc": "춤을 출때 행복하다고 말하는 아들! 열\n정적으로 자신의 길을 만들어가는 아들\n이 춤과 함께 열렬히 행복하기를."}, "18": {"title": "공연직후 핸지님", "file": "18_공연직후 핸지님.webp", "method": "Acrylic on Canvas", "desc": "합창공연을 하고 나온 직후, 지인의 모\n습! 가장 아름다운 순간을 지나고 있는\n모습을 보는 나도 함께 흐뭇했다."}, "19": {"title": "목선미", "file": "19_목선미.webp", "method": "Acrylic on Canvas", "desc": "초가을 늦은 오후 건널목을 건너는 뒷\n모습, 목선이 아름다운 언니를 그림에\n담다."}, "20": {"title": "그림 선생님, 나의!", "file": "20_그림 선생님 나의.webp", "method": "Acrylic on Canvas", "desc": "첫전시회 선생님따라 걷던 덕수궁 돌담\n길. 돌담길도 선생님 미소처럼 따뜻하\n고 부드럽다."}, "21": {"title": "인물", "file": "21_인물.webp", "method": "digital paint", "desc": "사람의 실체는 생김새라기 보다 그사람\n에게서 풍기는 분위기, 느낌! 그게 다가\n아닐까."}, "22": {"title": "해처럼 해바라기처럼 빛나라", "file": "22_해처럼 해바라기처럼 빛나라.webp", "method": "! Acrylic on Canvas", "desc": "이 그림이 걸리는 주변이 모두 환하게\n빛나고 좋은 장소가 되기를 바라며..."}, "23": {"title": "delight", "file": "23_delight.webp", "method": "Acrylic on Canvas", "desc": "금빛넘실 손위에 가득 빛나는 현존하지\n않는 이름의 꽃, 넘치는 기쁨의 즐거움\n을 표현"}, "24": {"title": "희망과 불신", "file": "24_희망과 불신.webp", "method": "Acrylic on Canvas", "desc": "희망의 빛이 되신 예수님. 창세기 선악\n과나무와 생명의 나무가 있다. 예수님\n의 십자가는 인간의 욕심과 불신으로\n멀어진 하느님과의 관계를 다시 연결해\n주는 생명의 나무다."}};
 let current = null;
 
 function openModal(order) {
@@ -625,13 +596,31 @@ function openModal(order) {
   const w = works[order];
   document.getElementById('modalTitle').textContent = String(order).padStart(2,'0') + ". " + w.title;
   const img = document.getElementById('modalImg');
+  img.src = "images/" + w.file;
   img.alt = w.title;
-  setImgWithFallback(img, w.file);
+  // 설명/재료(메타)도 함께 표시 (metadata 우선, 없으면 DOM에서 보완)
+  const id = String(order).padStart(2,'0');
+  const workEl = document.getElementById('work-' + id);
+  const descEl = workEl ? workEl.querySelector('.desc') : null;
+  const metaEl = workEl ? workEl.querySelector('.meta') : null;
+  const mMeta = document.getElementById('modalMeta');
+  const mDesc = document.getElementById('modalDescText');
+  const methodText = (w.method || '').trim();
+  const normalizeText = (s) => (s || '').replace(/\s*\n+\s*/g,' ').replace(/\s{2,}/g,' ').trim();
+  const descText = normalizeText(w.desc);
+  mMeta.textContent = methodText ? methodText : (metaEl ? metaEl.textContent.trim() : '');
+  mDesc.textContent = descText ? descText : (descEl ? normalizeText(descEl.textContent) : '');
   document.getElementById('modal').classList.add('open');
+  document.body.classList.add('modal-open');
 }
 
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+  const img = document.getElementById('modalImg');
+  img.src = "";
+  document.getElementById('modalMeta').textContent = "";
+  document.getElementById('modalDescText').textContent = "";
 }
 
 function step(dir) {
@@ -649,6 +638,19 @@ document.addEventListener('keydown', (e)=>{
   if (e.key === "Escape") closeModal();
   if (e.key === "ArrowLeft") step(-1);
   if (e.key === "ArrowRight") step(1);
+});
+
+// 상단 썸네일을 클릭하면 해당 작품으로 이동하는 대신,
+// 노트북/데스크톱에서도 한눈에 보이도록 '화면에 맞춰' 모달로 띄웁니다.
+document.querySelectorAll('a.thumb').forEach((a)=>{
+  const href = a.getAttribute('href') || '';
+  const m = href.match(/#work-(\d+)/);
+  if (!m) return;
+  const order = parseInt(m[1], 10);
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    openModal(order);
+  });
 });
 </script>
 </body>
